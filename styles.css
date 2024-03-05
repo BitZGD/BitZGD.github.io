@@ -1,10 +1,5 @@
-@font-face {
-  font-family: Whitney;
-  src: url("./assets/whitney.otf");
-}
-
 body {
-  font-family: 'Whitney', Arial, sans-serif;
+  font-family: 'Varela Round', Arial, sans-serif;
   color: #fff; /* Texto blanco */
   padding: 20px;
   background-image: url('assets/bg/layer0.svg');
@@ -118,10 +113,14 @@ body {
   border: 1px solid #fff; /* Borde blanco */
   transform: translateY(-5px); /* Leve elevación al pasar el ratón */
 }
+.mod-card .img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .mod-card img {
   max-width: 100%;
   height: auto;
-  border-radius: 5px; /* Esquinas redondeadas para imágenes */
 }
 .mod-card h1 {
   margin-top: 5px;
