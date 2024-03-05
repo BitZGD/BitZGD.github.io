@@ -14,6 +14,10 @@ body {
   opacity: 0.9;
   height: 100vh; 
 }
+
+#h1 {
+  margin-bottom: 100px; /* Espacio debajo del título */
+}
   
 .logocontainer {
   display: flex;
