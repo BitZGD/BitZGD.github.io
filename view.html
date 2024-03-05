@@ -3,24 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Downloader count manager for geode mods">
+    <link rel="icon" type="image/png" href="geode-circle.webp">
     <title>View Mod</title>
     <style>
        body {
     font-family: 'Arial', sans-serif;
     color: #FFFFFF;
-    margin: 0; /* Cambiado para eliminar el margen predeterminado */
+    margin: 0; 
     display: flex;
-    flex-direction: column; /* Alinear contenido verticalmente */
-    align-items: center; /* Centrar contenido horizontalmente */
-    justify-content: center; /* Centrar contenido verticalmente */
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
     background-image: url('layer0.svg');
     background-color: #36393F;
-    background-size: cover; /* Ajustar el tamaño de la imagen para cubrir el cuerpo */
+    background-size: cover; 
     background-repeat: no-repeat;
-    background-position: center center; /* Centrar la imagen de fondo */
-    background-attachment: fixed; /* Fondo fijo */
+    background-position: center center; 
+    background-attachment: fixed;
     opacity: 0.9;
-    height: 100vh; /* Ajustar la altura del cuerpo al 100% del viewport */
+    height: 100vh; 
 }
 
        
@@ -87,17 +89,17 @@
 </head>
 <body>
     <div id="background-animation"></div>
-    <div id="space"></div> <!-- Espacio gigante que abarca todo el HTML -->
+    <div id="space"></div> 
 
     <div id="stats-header"></div>
 
     <div id="generic-container" style="display: flex; flex-wrap: wrap; justify-content: center;"></div>
     <div id="release-container">
-        <!-- Aquí se mostrarán los contenedores por cada release -->
+       
     </div>
 
     <script>
-        // Función para obtener parámetros de la URL
+        
         function getParameterByName(name, url) {
             if (!url) url = window.location.href;
             name = name.replace(/[\[\]]/g, "\\$&");
@@ -158,29 +160,29 @@
         }
         }
 
-        // Obtener el parámetro 'url' de la URL
+ 
         var modUrl = getParameterByName('url');
 
-        // Obtener el parámetro 'version' de la URL
+     
         var modVersion = localStorage.getItem('modVersion');
 
-        // Eliminar el "./" de la URL del mod
+
         var modName = modUrl.replace('./', '');
 
-        // Construir la URL del repositorio GitHub con la versión
+    
         var githubUrl = 'https://raw.githubusercontent.com/geode-sdk/mods/main/mods-v2/' + modName + '/' + modVersion + "/entry.json";
 
-        // Realizar la solicitud HTTP para obtener el contenido del archivo JSON
+
         fetch(githubUrl)
             .then(response => response.json())
             .then(data => {
-                // Extraer partes de la URL download
+         
                 var downloadUrl = data.mod.download;
                 var parts = downloadUrl.split('/');
-                var author = parts[3]; // Lo que viene después de .com
-                var modName = parts[4]; // Lo que viene después del autor
+                var author = parts[3]; 
+                var modName = parts[4]; 
 
-                // Obtener las releases del repositorio de GitHub
+           
                 getDownloadCount('https://api.github.com/repos/' + author + '/' + modName + '/releases', 'generic-container');
             })
             .catch(error => {
