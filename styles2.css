@@ -16,6 +16,7 @@ h1 {
   letter-spacing: 2px;
   font-weight: 300;
   cursor: pointer;
+  margin-bottom: 100px; /* Espacio debajo del título */
 }
 
 .container {
