@@ -1,0 +1,174 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,900,700,300,100,500);
+* {
+  font-family: "Roboto", sans-serif;
+}
+
+html {
+  height: 100%;
+  background: linear-gradient(to right, #454BE6, #44A0C3, #3FDAAC);
+  background-image: url('layer0.svg');
+}
+
+h1 {
+  text-align: center;
+  color: #fff;
+  letter-spacing: 2px;
+  font-weight: 300;
+  cursor: pointer;
+}
+
+.container {
+  max-width: 60rem;
+  margin: 0 auto;
+  margin-top: 100px;
+}
+
+.signup {
+  text-align: center;
+  max-width: 400px;
+  margin: 0 auto;
+  background-color: #fff;
+  min-height: 200px;
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+  overflow: auto;
+  zoom: 1;
+}
+.signup svg {
+  margin: 0 auto;
+  display: block;
+  font-size: 50px;
+  color: #454BE6;
+  padding: 30px 0;
+}
+.signup .or {
+  text-transform: uppercase;
+  font-size: 10px;
+  display: inline-block;
+  vertical-align: basline;
+  position: relative;
+  color: #AAA;
+  margin-bottom: 10px;
+  letter-spacing: 2px;
+}
+.signup .or::before {
+  content: "";
+  display: block;
+  width: 100px;
+  position: absolute;
+  top: 0.5em;
+  right: 110%;
+  border-top: 1px solid #AAA;
+}
+.signup .or::after {
+  content: "";
+  display: block;
+  width: 100px;
+  position: absolute;
+  top: 0.5em;
+  left: 110%;
+  border-top: 1px solid #AAA;
+}
+
+form {
+  padding: 0 50px;
+}
+form input {
+  border: none;
+  border-bottom: 1px solid #456CD5;
+  color: #454BE6;
+  outline: none;
+  width: 100%;
+  margin-top: 40px;
+  font-weight: 300;
+}
+form input:nth-child(1) {
+  margin-top: 0px;
+}
+form input::-moz-placeholder {
+  color: #456CD5;
+  font-weight: 300;
+}
+form input:-ms-input-placeholder {
+  color: #456CD5;
+  font-weight: 300;
+}
+form input::placeholder {
+  color: #456CD5;
+  font-weight: 300;
+}
+form h1 {
+  color: #456CD5;
+  font-size: 12px;
+  margin-bottom: 40px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+button {
+  border: none;
+  background-color: #456CD5;
+  color: #fff;
+  width: 50%;
+  padding: 10px 20px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  outline: none;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  margin-bottom: 20px;
+  margin-top: 40px;
+  transition: background-color 0.2s ease;
+}
+button:hover {
+  background-color: #3e61bf;
+}
+button:active {
+  background-color: #304a93;
+}
+
+input[type=date] {
+  font-weight: 300;
+  color: #456CD5;
+}
+
+.social {
+  min-height: 20px;
+  max-width: 400px;
+  margin: 0 auto;
+  color: #fff;
+  font-size: 30px;
+}
+.social .facebook {
+  box-sizing: border-box;
+  cursor: pointer;
+  float: left;
+  width: 50%;
+  height: 100%;
+  background-color: #3B5998;
+  padding: 10px;
+}
+.social .twitter {
+  box-sizing: border-box;
+  cursor: pointer;
+  float: right;
+  height: 100%;
+  background-color: #55acee;
+  width: 50%;
+  padding: 10px;
+}
+
+.question {
+  text-align: left;
+  max-width: 400px;
+  margin: 0 auto;
+  margin-top: 30px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+}
+.question a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+}

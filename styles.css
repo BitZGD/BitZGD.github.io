@@ -1,0 +1,189 @@
+@import url('https://fonts.googleapis.com/css2?family=Whitney:wght@300;400;500;700&display=swap');
+
+
+body {
+    font-family: 'Arial', sans-serif;
+    color: #fff; /* Texto blanco */
+    padding: 20px;
+    background-image: url('layer0.svg');
+    background-repeat: no-repeat;
+    background-size: 200%;
+    background-attachment: fixed; /* Fondo fijo */
+    background-position: center top -90px; /* Centra el fondo 50 píxeles desde la parte superior */
+}
+  
+.logocontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin-top: -350px; /* Agrega un margen superior de 50px */
+  }
+  
+  .flex-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  #geodelogo {
+    height: 100px;
+    margin-right: 10px;
+  }
+  
+  .geode-text {
+    font-size: 40;
+    font-weight: bold;
+    font-family: 'Varela Round', sans-serif; 
+    color: #fff;
+    text-align: center;
+    margin-bottom: 10px; /* Baja el texto 10px */
+  }
+
+  .font-head.text-2xl.mt-12.mb-12.text-center {
+    text-align: center;
+    margin-top: -350px; /* Agrega un margen superior de 50px */
+  }
+  .sub-text {
+    font-size: 5xl;
+    font-weight: normal;
+    font-family: 'Varela Round', sans-serif; 
+    color: #fff;
+    text-align: center;
+    margin-top: -350px; /* Agrega un margen superior de 50px */
+  }
+  
+  .geode-text2 {
+    font-size: 40;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 10px; /* Baja el texto 10px */
+  }
+  @media (max-width: 400px) {
+    .geode-text {
+      font-size: 40;
+    }
+  }
+  
+  
+  #search-input {
+    display: block;
+    margin: 0 auto;
+    background-color: #282b30; /* Fondo gris oscuro */
+    border: 1px solid #36393e; /* Borde gris */
+    border-radius: 50px; /* Redondea las esquinas */
+    padding: 10px;
+    width: 80%; /* Aumenta el ancho de la barra */
+    color: #fff; /* Texto blanco */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    margin-bottom: 50px;
+    margin-top: -50px; /* Agrega un margen superior de 50px */
+    transition: all 0.3s ease; /* Transiciones suaves */
+  }
+  
+  #search-input::placeholder {
+    color: #ccc; /* Texto gris claro */
+    transition: 0.2s ease-in-out;
+  }
+  
+  #search-input:focus {
+    transform: scale(1.1); /* Aumenta el tamaño un 10% al enfocar */
+    border-color: #7289da; /* Borde azul Discord */
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Sombra al enfocar */
+  }
+  
+  #mods-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Mantener diseño de cuadrícula */
+    gap: 20px; /* Espacio entre contenedores */
+  }
+  
+  .mod-card {
+    background: rgba(40, 43, 48, 0.6); /* Fondo gris oscuro con opacidad 60% */
+    border: 1px solid #36393e; /* Borde gris */
+    border-radius: 8px; /* Esquinas redondeadas */
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    overflow: hidden; /* Evitar desbordamiento de contenido */
+    transition: transform 0.3s ease;
+  }
+  
+  .mod-card:hover {
+    border: 1px solid #fff; /* Borde blanco */
+    transform: translateY(-5px); /* Leve elevación al pasar el ratón */
+  }
+  
+  .mod-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px; /* Esquinas redondeadas para imágenes */
+  }
+  
+  .mod-card h1 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff; /* Título blanco */
+  }
+  
+  #geodelogo {
+    width: 200px; /* Ajusta el tamaño de la imagen según tus preferencias */
+    height: auto; /* Mantiene la proporción de aspecto de la imagen */
+    display: block; /* Hace que la imagen sea un bloque para poder establecer márgenes */
+    margin-top: 20px; /* Espacio superior entre la imagen y el elemento anterior */
+    margin-bottom: 20px; /* Espacio inferior entre la imagen y el elemento siguiente */
+    margin-left: auto; /* Centra la imagen horizontalmente */
+    margin-right: auto; /* Centra la imagen horizontalmente */
+}
+  
+  .mod-card h3 {
+    font-size: 14px;
+    margin-top: 5px;
+    color: #7289da; /* Azul Discord */
+    max-width: 150px; /* Ajusta el ancho máximo según tu diseño */
+    white-space: nowrap; /* Evita saltos de línea */
+    overflow: hidden; /* Oculta el texto que exceda el ancho máximo */
+    text-overflow: ellipsis; /* Muestra puntos suspensivos al final del texto */
+  }
+  
+  .mod-card p {
+    margin-top: 5px;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #ddd; /* Gris claro */
+    max-height: 50px; /* Ajusta la altura máxima según tu diseño */
+    overflow: hidden; /* Oculta el texto que exceda la altura máxima */
+    text-overflow: ellipsis; /* Muestra puntos suspensivos al final del texto */
+  }
+  
+  .buttons {
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-10%);
+    text-align: center;
+    margin-top: 0;
+    width: 200px; /* Ajusta el ancho del contenedor de botones */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .buttons a {
+    padding: 10px 20px;
+    border: 1px solid #fff; /* Borde blanco */
+    text-decoration: none;
+    border-radius: 5px; /* Esquinas redondeadas */
+    color: #fff;
+    font-family: "Whitney", sans-serif;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+  }
+  
+  .buttons a:hover {
+    background-color: #677bc4; /* Azul más oscuro al pasar el ratón */
+  }
+  
+  
