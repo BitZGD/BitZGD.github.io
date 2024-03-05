@@ -23,8 +23,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  margin-top: -350px; 
+  height: 50vh;
 }
 
 .flex-container {
@@ -49,7 +48,6 @@ body {
 
 .font-head.text-2xl.mt-12.mb-12.text-center {
   text-align: center;
-  margin-top: -350px; /* Agrega un margen superior de 50px */
 }
 
 .sub-text {
@@ -58,7 +56,6 @@ body {
   font-family: 'Varela Round', sans-serif; 
   color: #fff;
   text-align: center;
-  margin-top: -350px; /* Agrega un margen superior de 50px */
 }
 
 .geode-text2 {
@@ -86,7 +83,6 @@ body {
   color: #fff; /* Texto blanco */
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   margin-bottom: 50px;
-  margin-top: -50px; /* Agrega un margen superior de 50px */
   transition: all 0.3s ease; /* Transiciones suaves */
 }
 #search-input::placeholder {
