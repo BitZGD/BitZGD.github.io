@@ -1,7 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Whitney:wght@300;400;500;700&display=swap');
+@font-face {
+  font-family: Whitney;
+  src: url("./assets/whitney.otf");
+}
 
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: 'Whitney', Arial, sans-serif;
   color: #fff; /* Texto blanco */
   padding: 20px;
   background-image: url('assets/bg/layer0.svg');
@@ -158,12 +161,7 @@ body {
 }
 
 .buttons {
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-10%);
-  text-align: center;
-  margin-top: 0;
-  width: 200px; /* Ajusta el ancho del contenedor de botones */
+  width: 100%; /* Ajusta el ancho del contenedor de botones */
   display: flex;
   justify-content: center;
   align-items: center;
