@@ -21,7 +21,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 50vh;
+  height: 20vh; /* Reducir la altura del contenedor del logo */
 }
 
 .flex-container {
@@ -54,6 +54,7 @@ body {
   font-family: 'Varela Round', sans-serif; 
   color: #fff;
   text-align: center;
+  margin-top: -100px; /* Ajusta la cantidad según tu preferencia */
 }
 
 .geode-text2 {

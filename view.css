@@ -3,7 +3,6 @@ body {
     color: #fff; /* Texto blanco */
     padding: 20px;
     background-image: url('assets/bg/layer0.svg');
-    background-image: url('assets/bg/layer0.svg');
     background-color: #36393F;
     background-size: cover; 
     background-repeat: no-repeat;
@@ -11,6 +10,8 @@ body {
     background-attachment: fixed;
     opacity: 0.9;
     height: 100vh; 
+   
+    
 }
 
 .release-container {
@@ -21,8 +22,11 @@ body {
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(117, 117, 117, 0.1);
-    background-color: rgba(72, 76, 84, 0.7);
+    background: rgba(40, 43, 48, 0.6); /* Fondo gris oscuro con opacidad 60% */
+  border: 1px solid #dcdcdc; /* Borde gris */
     overflow: hidden;
+    margin-bottom: 20px; /* Agregar un margen inferior de 20px */
+    backdrop-filter: url("data:image/svg+xml;utf9,<svg%20version='1.1'%20xmlns='http://www.w3.org/2000/svg'><filter%20id='blur'><feGaussianBlur%20stdDeviation='10'%20/></filter></svg>#blur");
 }
 
 h2 {
@@ -76,4 +80,5 @@ h2 {
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
+    margin-bottom: 20px; /* Agrega un margen inferior de 20px */
 }

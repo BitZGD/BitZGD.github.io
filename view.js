@@ -52,11 +52,10 @@ async function getDownloadCount(url, containerId) {
             document.getElementById(containerId).appendChild(releaseContainer);
         });
     } catch (error) {
-        console.error('Error fetching data:', error);
-        document.getElementById(containerId).innerHTML = `<p>Error fetching data. Please check the console for details.</p>`;
+      
+        throw error;
     }
 }
-
 
 var modUrl = getParameterByName('url');
 var modVersion = localStorage.getItem('modVersion');
@@ -72,8 +71,17 @@ fetch(githubUrl)
     var author = parts[3]; 
     var modName = parts[4]; 
 
-    getDownloadCount('https://api.github.com/repos/' + author + '/' + modName + '/releases', 'generic-container');
+    var githubApiUrl = 'https://api.github.com/repos/' + author + '/' + modName + '/releases';
+    return getDownloadCount(githubApiUrl, 'generic-container')
+    .catch(gitGayError => {
+        console.error('github link failed!', gitGayError);
+        var gitGayUrl = 'https://git.gay/api/v1/repos/' + author + '/' + modName + '/releases';
+        getDownloadCount(gitGayUrl, 'generic-container');
+       
+    });
 })
 .catch(error => {
-    console.error('Error al obtener datos del mod:', error);
+    console.error('Error al obtener datos del mod desde GitHub:', error);
 });
+
+

@@ -4,10 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Downloader count manager for geode mods">
-    <link rel="icon" type="image/png" href="geode-circle.webp">
+    <link rel="icon" type="image/png" href="assets/geode-circle.webp">
     <title>View Mod</title>
     <link rel="stylesheet" href="view.css">
 </head>
+<script>
+var headername = localStorage.getItem('realname');
+document.title =headername + " Stats";
+</script>
+
 <body>
     <div id="background-animation"></div>
     <div id="space"></div> 
