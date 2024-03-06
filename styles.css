@@ -24,6 +24,7 @@ body {
   height: 20vh; /* Reducir la altura del contenedor del logo */
 }
 
+
 .flex-container {
   display: flex;
   flex-direction: row;
@@ -56,6 +57,7 @@ body {
   text-align: center;
   margin-top: -100px; /* Ajusta la cantidad según tu preferencia */
 }
+
 
 .geode-text2 {
   font-size: 40;
@@ -158,6 +160,25 @@ body {
   max-height: 50px; /* Ajusta la altura máxima según tu diseño */
   overflow: hidden; /* Oculta el texto que exceda la altura máxima */
   text-overflow: ellipsis; /* Muestra puntos suspensivos al final del texto */
+}
+
+@media (max-width: 768px) { /* Cambia el valor según tus necesidades */
+  #mods-container {
+    grid-template-columns: repeat(2, minmax(150px, 1fr)); /* Cambia el número de columnas y el ancho mínimo según tus necesidades */
+  }
+  .mod-card {
+    padding: 10px; /* Ajusta el padding según tus necesidades */
+   
+  }
+  .mod-card h1 {
+    font-size: 16px; /* Ajusta el tamaño de fuente según tus necesidades */
+  }
+  .mod-card h3 {
+    font-size: 12px; /* Ajusta el tamaño de fuente según tus necesidades */
+  }
+  .mod-card p {
+    font-size: 14px; /* Ajusta el tamaño de fuente según tus necesidades */
+  }
 }
 
 .buttons {

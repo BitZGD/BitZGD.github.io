@@ -10,12 +10,10 @@ body {
     background-attachment: fixed;
     opacity: 0.9;
     height: 100vh; 
-   
-    
 }
 
 .release-container {
-    width: 220px;
+    width: calc(50% - 20px); /* 50% del ancho menos el espacio entre elementos */
     max-height: 180px; 
     text-align: center;
     position: relative;
@@ -23,47 +21,43 @@ body {
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(117, 117, 117, 0.1);
     background: rgba(40, 43, 48, 0.6); /* Fondo gris oscuro con opacidad 60% */
-  border: 1px solid #dcdcdc; /* Borde gris */
+    border: 1px solid #dcdcdc; /* Borde gris */
     overflow: hidden;
     margin-bottom: 20px; /* Agregar un margen inferior de 20px */
     backdrop-filter: url("data:image/svg+xml;utf9,<svg%20version='1.1'%20xmlns='http://www.w3.org/2000/svg'><filter%20id='blur'><feGaussianBlur%20stdDeviation='10'%20/></filter></svg>#blur");
 }
 
-h2 {
-    color: #ffffff;
-    font-size: 18px;
+h2,
+.release-name,
+.download-count,
+.tag,
+.description {
     margin-bottom: 10px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+h2 {
+    color: #ffffff;
+    font-size: 18px;
 }
 
 .release-name {
     font-size: 16px;
-    margin-bottom: 10px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 }
 
 .download-count {
     font-size: 20px;
-    margin-bottom: 10px;
 }
 
 .tag {
     color: #b6b6b6;
     font-weight: bold;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 }
 
 .description {
     color: #979797;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 }
 
 #stats-header {
@@ -78,7 +72,35 @@ h2 {
 #generic-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
+    justify-content: space-between;
+    gap: 20px; /* Ajusta el espacio entre los release-container */
     margin-bottom: 20px; /* Agrega un margen inferior de 20px */
+}
+@media (max-width: 768px) {
+    #generic-container {
+        display: flex;
+        flex-wrap: wrap;
+     
+        margin-top: 80px; /* Agrega un margen inferior de 20px */
+    }
+
+    .release-container {
+        flex: 0 0 auto; /* Asegura que el tamaño del contenedor no se vea afectado por el contenido */
+        width: 127px; /* Ancho deseado para el contenedor */
+        max-width: 135px; /* Máximo ancho permitido */
+        padding: 10px; /* Ajusta el padding interno según sea necesario */
+        margin: 5px; /* Ajusta el margen externo según sea necesario */
+        margin-right: 15px; /* Ajusta el margen externo según sea necesario */
+        margin-bottom: 15px; /* Ajusta el margen externo según sea necesario */
+    }
+
+    h2, .release-name, .tag, .description {
+        font-size: 1em; /* Ajusta el tamaño del texto en relación con el tamaño del contenedor */
+    }
+
+    .download-count {
+        font-size: 1em; /* Ajusta el tamaño del texto en relación con el tamaño del contenedor */
+        white-space: normal; /* Permite que el texto se rompa en varias líneas si es necesario */
+        word-wrap: break-word; /* Rompe palabras largas y largos strings de texto */
+    }
 }
