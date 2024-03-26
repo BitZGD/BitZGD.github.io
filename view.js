@@ -10,6 +10,7 @@ function getParameterByName(name, url) {
 
 // Función para obtener las releases de GitHub
 async function getDownloadCount(url, containerId) {
+    var total = 0
     try {
         const response = await fetch(url);
         const releases = await response.json();
@@ -37,6 +38,9 @@ async function getDownloadCount(url, containerId) {
             const downloadCountText = document.createElement('p');
             downloadCountText.classList.add('download-count');
             downloadCountText.textContent = `${totalDownloads} Downloads`;
+
+            total += totalDownloads
+
             releaseContainer.appendChild(downloadCountText);
 
             const tagText = document.createElement('p');
@@ -51,6 +55,8 @@ async function getDownloadCount(url, containerId) {
 
             document.getElementById(containerId).appendChild(releaseContainer);
         });
+
+        document.getElementById("downloads").innerHTML = `${total} Total Downloads`
     } catch (error) {
       
         throw error;
