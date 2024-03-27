@@ -25,10 +25,13 @@
           <h1 class="geode-text">Geode</h1>
         </div>
     </div>
-    <div id="login-button">
-        <button id="login-button" onclick="window.location.href = 'https://github.com/login/oauth/authorize?client_id=89d97e38739c43a5d846&redirect_uri=127.0.0.1:3000/callback.html&scope=user'">Login</button>
+
+    <!-- Div para mostrar la imagen y el nombre de usuario -->
+    <div id="user-info" style="display: none;">
+        <img id="user-avatar" width="44" height="44">
+        <span id="username"></span>
     </div>
-    
+
     <h1 id="sub-text" class="font-head text-2xl mt-12 mb-12 text-center">Mod Downloader Count</h1>
     <input type="text" id="search-input" placeholder="Search...">
 
@@ -37,6 +40,23 @@
         <!-- Cada mod se insertará aquí dinámicamente -->
     </div>
 
+    <script>
+        // Obtener el nombre de usuario y la URL de la imagen del usuario del almacenamiento local
+        var storedUsername = localStorage.getItem('username');
+        var storedAvatarUrl = localStorage.getItem('avatarUrl');
+
+        // Verificar si hay un usuario almacenado
+        if (storedUsername && storedAvatarUrl) {
+            // Mostrar el div de la información del usuario
+            document.getElementById('user-info').style.display = 'block';
+
+            // Mostrar la imagen y el nombre de usuario
+            document.getElementById('user-avatar').src = storedAvatarUrl;
+            document.getElementById('username').textContent = storedUsername;
+
+         
+        }
+    </script>
     <script src="main.js"></script>
 </body>
 </html>
