@@ -66,7 +66,7 @@ h2 {
     white-space: nowrap;
 }
 
-#stats-header,#downloads {
+#stats-header {
     font-size: 24px;
     font-weight: bold;
     color: #c0c0c0;
@@ -75,6 +75,24 @@ h2 {
     margin-bottom: 20px;
 }
 
+#downloads {
+    font-size: 18px;
+    word-wrap: break-word;
+    color: #c0c0c0;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 35px;
+    margin-top: -10px;
+}
+
+#downloads1 {
+    font-size: 18px;
+    word-wrap: break-word;
+    color: #c0c0c0;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+}
 #generic-container {
     display: flex;
     flex-wrap: wrap;
@@ -82,6 +100,64 @@ h2 {
     gap: 10px;
     margin-bottom: 20px; /* Agrega un margen inferior de 20px */
 }
+
+#comments-button {
+    position: fixed;
+    bottom: 20px; 
+    right: 20px; 
+    z-index: 9999;
+    border-radius: 15px;
+    color: white;
+    padding: 10px 20px;
+    box-shadow: 0 4px 8px rgba(117, 117, 117, 0.1);
+    background: rgba(40, 43, 48, 0.6); 
+    border: 1px solid #dcdcdc; 
+    overflow: hidden;
+}
+
+#comments-button:hover {
+    
+    background-color: #ffffff66;
+    color: black;
+    border: 1px solid #000000;
+}
+
+#comments-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 30%;
+    height: 100%;
+    z-index: 9998;
+    background-color: rgba(12, 12, 12, 0.831);
+    padding: 20px;
+    border-left: 1px solid #ccc;
+    overflow-y: auto;
+}
+
+#comments-container button {
+    margin-top: 10px;
+    padding: 5px 10px;
+    border-radius: 15px;
+    border-radius: 15px;
+    color: white;
+    padding: 10px 20px;
+    box-shadow: 0 4px 8px rgba(117, 117, 117, 0.1);
+    background: rgba(40, 43, 48, 0.6); 
+    border: 1px solid #dcdcdc; 
+    overflow: hidden;
+}
+
+@media only screen and (max-width: 600px) {
+    #comments-container {
+        width: 90%; 
+        top: 0;
+        height: 100vh; 
+        padding-top: 50px; 
+    }
+}
+
 
 @media (max-width: 768px) {
     #generic-container {
@@ -102,13 +178,13 @@ h2 {
     }
 
     h2, .release-name, .tag, .description {
-        font-size: 1em; /* Ajusta el tamaño del texto en relación con el tamaño del contenedor */
+        font-size: 1em; 
     }
 
     .download-count {
-        font-size: 1em; /* Ajusta el tamaño del texto en relación con el tamaño del contenedor */
-        white-space: normal; /* Permite que el texto se rompa en varias líneas si es necesario */
-        word-wrap: break-word; /* Rompe palabras largas y largos strings de texto */
+        font-size: 1em; 
+        white-space: normal;
+        word-wrap: break-word;
     }
 }
 

@@ -55,8 +55,8 @@ async function getDownloadCount(url, containerId) {
 
             document.getElementById(containerId).appendChild(releaseContainer);
         });
-
-        document.getElementById("downloads").innerHTML = `${total} Total Downloads`
+        document.getElementById("downloads1").innerHTML = `Total Downloads`
+        document.getElementById("downloads").innerHTML = `${total} `
     } catch (error) {
         throw error;
     }

@@ -14,79 +14,31 @@
     </script>
   <script>
     function saveUserInfo() {
-        // Obtener el nombre de usuario y la URL de la imagen del usuario
+     
         var username = document.querySelector('.avatar img').alt.slice(1);
         var avatarUrl = document.querySelector('.avatar img').src;
 
-        // Guardar el nombre de usuario y la URL de la imagen del usuario en el almacenamiento local
+    
         localStorage.setItem('username', username);
         localStorage.setItem('avatarUrl', avatarUrl);
     }
 </script>
-
-<style>
-    #comments-button {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        z-index: 9999;
-        border-radius: 15px;
-        color: white;
-        padding: 10px 20px;
-        box-shadow: 0 4px 8px rgba(117, 117, 117, 0.1);
-        background: rgba(40, 43, 48, 0.6); /* Fondo gris oscuro con opacidad 60% */
-        border: 1px solid #dcdcdc; /* Borde gris */
-        overflow: hidden;
-    }
-
-    #comments-button:hover {
-        
-        background-color: #ffffff66;
-        color: black;
-        border: 1px solid #000000; /* Borde gris */
-    }
-
-    #comments-container {
-        display: none;
-        position: fixed;
-        top: 0;
-        right: 0;
-        width: 50%;
-        height: 100%;
-        z-index: 9998;
-        background-color: rgba(12, 12, 12, 0.831);
-        padding: 20px;
-        border-left: 1px solid #ccc;
-        overflow-y: auto;
-    }
-
-    #comments-container button {
-        margin-top: 10px;
-        padding: 5px 10px;
-        border-radius: 15px;
-        border-radius: 15px;
-        color: white;
-        padding: 10px 20px;
-        box-shadow: 0 4px 8px rgba(117, 117, 117, 0.1);
-        background: rgba(40, 43, 48, 0.6); /* Fondo gris oscuro con opacidad 60% */
-        border: 1px solid #dcdcdc; /* Borde gris */
-        overflow: hidden;
-    }
-</style>
 
 <body>
     <div id="background-animation"></div>
     <div id="space"></div> 
 
     <div id="stats-header"></div>
+   
+    <p id="downloads1"></p>
     <p id="downloads"></p>
-
+   
     <div id="generic-container"></div>
     <div id="release-container">
        
     </div>
 
-    <button id="comments-button" onclick="toggleComments()">Comments</button>
+  
 
     <div id="comments-container">
         <script src="https://utteranc.es/client.js"
@@ -97,7 +49,7 @@
             async>
         </script>
     </div>
-
+    <button id="comments-button" onclick="toggleComments()">Comments</button>
     <script>
         function toggleComments() {
         var commentsContainer = document.getElementById("comments-container");
