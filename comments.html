@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comentarios</title>
+</head>
+<body>
+    <h1>Comentarios</h1>
+
+    <div id="comments-container">
+        <!-- Aquí se mostrarán los comentarios -->
+    </div>
+
+    <form id="comment-form">
+        <input type="text" id="author" placeholder="Tu nombre" required><br>
+        <input type="text" id="image" placeholder="URL de tu imagen"><br>
+        <textarea id="message" placeholder="Escribe tu comentario" required></textarea><br>
+        <button type="submit">submit</button>
+    </form>
+
+    <script>
+        function addCommentToJSON(author, image, message) {
+            var currentDate = new Date().toISOString(); // Obtiene la fecha y hora actual en formato ISO
+            var headername = localStorage.getItem('realname');
+
+            // Intenta obtener los comentarios existentes del localStorage
+            var existingCommentsJSON = localStorage.getItem('comments');
+            var existingComments = existingCommentsJSON ? JSON.parse(existingCommentsJSON) : {};
+
+            // Si ya hay comentarios para este headername, agrégalos
+            if (existingComments.hasOwnProperty(headername)) {
+                existingComments[headername].push({
+                    "author": author,
+                    "image": image,
+                    "message": message,
+                    "date": currentDate
+                });
+            } else {
+                // Si no hay comentarios para este headername, crea una nueva entrada
+                existingComments[headername] = [{
+                    "author": author,
+                    "image": image,
+                    "message": message,
+                    "date": currentDate
+                }];
+            }
+
+            // Guarda los comentarios actualizados en el localStorage
+            localStorage.setItem('comments', JSON.stringify(existingComments));
+
+            // Muestra un mensaje de éxito
+            var successMessage = document.createElement('p');
+            successMessage.textContent = 'Comentario agregado con éxito.';
+            document.body.appendChild(successMessage);
+
+            // Muestra los comentarios actualizados
+            showComments();
+        }
+
+        function showComments() {
+            var headername = localStorage.getItem('realname');
+
+            // Intenta obtener los comentarios existentes del localStorage
+            var existingCommentsJSON = localStorage.getItem('comments');
+            var existingComments = existingCommentsJSON ? JSON.parse(existingCommentsJSON) : {};
+
+            // Si hay comentarios para este headername, muéstralos
+            if (existingComments.hasOwnProperty(headername)) {
+                var comments = existingComments[headername];
+                var commentsContainer = document.getElementById('comments-container');
+
+                commentsContainer.innerHTML = ''; // Limpiar el contenedor
+
+                comments.forEach(function(comment) {
+                    var commentDiv = document.createElement('div');
+                    commentDiv.classList.add('comment');
+
+                    var authorPara = document.createElement('p');
+                    authorPara.textContent = 'Autor: ' + comment.author;
+
+                    var imagePara = document.createElement('img');
+                    imagePara.src = comment.image;
+
+                    var messagePara = document.createElement('p');
+                    messagePara.textContent = 'Comentario: ' + comment.message;
+
+                    commentDiv.appendChild(authorPara);
+                    commentDiv.appendChild(imagePara);
+                    commentDiv.appendChild(messagePara);
+
+                    commentsContainer.appendChild(commentDiv);
+                });
+            }
+        }
+
+        document.getElementById('comment-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evitar que el formulario se envíe
+
+            var authorInput = document.getElementById('author');
+            var imageInput = document.getElementById('image');
+            var messageInput = document.getElementById('message');
+
+            var author = authorInput.value;
+            var image = imageInput.value;
+            var message = messageInput.value;
+
+            authorInput.value = '';
+            imageInput.value = '';
+            messageInput.value = '';
+
+            addCommentToJSON(author, image, message);
+        });
+
+        // Muestra los comentarios al cargar la página
+        showComments();
+    </script>
+</body>
+</html>

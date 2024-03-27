@@ -1,0 +1,42 @@
+<script>
+   function getQueryParams() {
+    const params = {};
+    window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m, key, value) {
+        params[key] = decodeURIComponent(value);
+    });
+    return params;
+}
+
+function doPost(url, data) {
+    return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', url);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onload = () => {
+            if (xhr.status === 200) {
+                resolve(xhr.responseText);
+            } else {
+                reject(xhr.statusText);
+            }
+        };
+        xhr.onerror = () => reject(xhr.statusText);
+        xhr.send(JSON.stringify(data));
+    });
+}
+
+const queryParams = getQueryParams();
+
+doPost('https://github.com/login/oauth/access_token', {
+    client_id: '89d97e38739c43a5d846',
+    client_secret: '163e811519bf46aabe3bd9638342705350dd0c12',
+    code: queryParams.code,
+    redirect_uri: 'http://127.0.0.1:3000/'
+}).then(response => {
+    const accessToken = new URLSearchParams(response).get('access_token');
+    document.cookie = `access_token=${accessToken}; path=/;`;
+    window.location.href = '/'; // Redirect to homepage or another page
+}).catch(error => {
+    console.error('Error:', error);
+});
+
+</script>

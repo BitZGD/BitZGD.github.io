@@ -10,8 +10,57 @@
 </head>
 <script>
 var headername = localStorage.getItem('realname');
-document.title =headername + " Stats";
+document.title = headername + " Stats";
 </script>
+<style>
+    #comments-button {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+        border-radius: 15px;
+        color: white;
+        padding: 10px 20px;
+        box-shadow: 0 4px 8px rgba(117, 117, 117, 0.1);
+        background: rgba(40, 43, 48, 0.6); /* Fondo gris oscuro con opacidad 60% */
+        border: 1px solid #dcdcdc; /* Borde gris */
+        overflow: hidden;
+    }
+
+    #comments-button:hover {
+        
+        background-color: #ffffff66;
+        color: black;
+        border: 1px solid #000000; /* Borde gris */
+    }
+
+    #comments-container {
+        display: none;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 50%;
+        height: 100%;
+        z-index: 9998;
+        background-color: white;
+        padding: 20px;
+        border-left: 1px solid #ccc;
+        overflow-y: auto;
+    }
+
+    #comments-container button {
+        margin-top: 10px;
+        padding: 5px 10px;
+        border-radius: 15px;
+        border-radius: 15px;
+        color: white;
+        padding: 10px 20px;
+        box-shadow: 0 4px 8px rgba(117, 117, 117, 0.1);
+        background: rgba(40, 43, 48, 0.6); /* Fondo gris oscuro con opacidad 60% */
+        border: 1px solid #dcdcdc; /* Borde gris */
+        overflow: hidden;
+    }
+</style>
 
 <body>
     <div id="background-animation"></div>
@@ -25,6 +74,29 @@ document.title =headername + " Stats";
        
     </div>
 
+    <button id="comments-button" onclick="toggleComments()">Comments</button>
+
+    <div id="comments-container">
+        <script src="https://utteranc.es/client.js"
+            repo="BitZGD/BitZGD.github.io"
+            issue-term="url"
+            theme="github-dark"
+            crossorigin="anonymous"
+            async>
+        </script>
+       
+    </div>
+
+    <script>
+        function toggleComments() {
+            var commentsContainer = document.getElementById("comments-container");
+            if (commentsContainer.style.display === "none") {
+                commentsContainer.style.display = "block";
+            } else {
+                commentsContainer.style.display = "none";
+            }
+        }
+    </script>
     <script src="view.js"></script>
 </body>
 </html>

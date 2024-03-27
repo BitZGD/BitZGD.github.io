@@ -58,7 +58,6 @@ async function getDownloadCount(url, containerId) {
 
         document.getElementById("downloads").innerHTML = `${total} Total Downloads`
     } catch (error) {
-      
         throw error;
     }
 }
@@ -91,3 +90,4 @@ fetch(githubUrl)
 });
 
 
+//Refresh?/ no
