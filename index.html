@@ -15,7 +15,7 @@
     
     <title>Geode Mods Downloader Count</title>
     <link rel="icon" type="image/png" href="assets/geode-circle.webp">
-    <link rel="stylesheet" href="styles.css"> <!-- Enlace al archivo CSS -->
+    <link rel="stylesheet" href="styles.css"> 
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Varela+Round&display=swap" rel="stylesheet"> 
 </head>
 <body>
@@ -26,7 +26,7 @@
         </div>
     </div>
 
-    <!-- Div para mostrar la imagen y el nombre de usuario -->
+    
     <div id="user-info" style="display: none;">
         <img id="user-avatar" width="44" height="44">
         <span id="username"></span>
@@ -35,19 +35,20 @@
     <h1 id="sub-text" class="font-head text-2xl mt-12 mb-12 text-center">Mod Downloader Count</h1>
     <input type="text" id="search-input" placeholder="Search...">
 
-    <!-- Contenedor principal de los mods -->
+
     <div id="mods-container">
-        <!-- Cada mod se insertará aquí dinámicamente -->
+   
+    
     </div>
 
     <script>
-        // Obtener el nombre de usuario y la URL de la imagen del usuario del almacenamiento local
+      
         var storedUsername = localStorage.getItem('username');
         var storedAvatarUrl = localStorage.getItem('avatarUrl');
 
-        // Verificar si hay un usuario almacenado
+   
         if (storedUsername && storedAvatarUrl) {
-            // Mostrar el div de la información del usuario
+  
             document.getElementById('user-info').style.display = 'block';
 
             // Mostrar la imagen y el nombre de usuario

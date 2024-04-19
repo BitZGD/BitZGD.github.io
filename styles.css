@@ -132,6 +132,20 @@ body {
   gap: 20px; /* Espacio entre contenedores */
 }
 
+
+.geode-mod-card {
+  background: rgba(40, 43, 48, 0.6); /* Fondo gris oscuro con opacidad 60% */
+  border: 1px solid #36393e; /* Borde gris */
+  border-radius: 8px; /* Esquinas redondeadas */
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  overflow: hidden; /* Evitar desbordamiento de contenido */
+}
+
+.geode-mod-card:hover {
+  border: 1px solid #fff; /* Borde blanco */
+  transform: translateY(-5px); /* Leve elevación al pasar el ratón */
+}
 .mod-card {
   background: rgba(40, 43, 48, 0.6); /* Fondo gris oscuro con opacidad 60% */
   border: 1px solid #36393e; /* Borde gris */

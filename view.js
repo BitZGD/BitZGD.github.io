@@ -8,9 +8,13 @@ function getParameterByName(name, url) {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
+function formatNumber(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 // Función para obtener las releases de GitHub
 async function getDownloadCount(url, containerId) {
-    var total = 0
+    var total = 0;
     try {
         const response = await fetch(url);
         const releases = await response.json();
@@ -19,6 +23,10 @@ async function getDownloadCount(url, containerId) {
 
         const nameheader = document.getElementById('stats-header');
         nameheader.textContent = realname + " Stats";
+
+        // Obtener la cantidad total de releases
+        const releaseCount = releases.length;
+
         releases.forEach((release, index) => {
             const releaseContainer = document.createElement('div');
             releaseContainer.classList.add('release-container');
@@ -29,7 +37,11 @@ async function getDownloadCount(url, containerId) {
 
             const releaseNameElement = document.createElement('div');
             releaseNameElement.classList.add('release-name');
-            releaseNameElement.textContent = `Release ${index + 1}`;
+            if (index === 0) {
+                releaseNameElement.textContent = 'Latest Release';
+            } else {
+                releaseNameElement.textContent = `Release ${releaseCount - index}`;
+            }
             releaseContainer.appendChild(releaseNameElement);
 
             const downloadCounts = release.assets.map(asset => asset.download_count);
@@ -37,9 +49,9 @@ async function getDownloadCount(url, containerId) {
 
             const downloadCountText = document.createElement('p');
             downloadCountText.classList.add('download-count');
-            downloadCountText.textContent = `${totalDownloads} Downloads`;
+            downloadCountText.textContent = `${formatNumber(totalDownloads)} Downloads`;
 
-            total += totalDownloads
+            total += totalDownloads;
 
             releaseContainer.appendChild(downloadCountText);
 
@@ -55,8 +67,9 @@ async function getDownloadCount(url, containerId) {
 
             document.getElementById(containerId).appendChild(releaseContainer);
         });
-        document.getElementById("downloads1").innerHTML = `Total Downloads`
-        document.getElementById("downloads").innerHTML = `${total} `
+
+        document.getElementById("downloads1").innerHTML = `Total Downloads`;
+        document.getElementById("downloads").innerHTML = `${formatNumber(total)} `;
     } catch (error) {
         throw error;
     }
@@ -67,27 +80,26 @@ var modVersion = localStorage.getItem('modVersion');
 var modName = modUrl.replace('./', '');
 var githubUrl = 'https://raw.githubusercontent.com/geode-sdk/mods/main/mods-v2/' + modName + '/' + modVersion + "/entry.json";
 
-fetch(githubUrl)
-.then(response => response.json())
-.then(data => {
-
-    var downloadUrl = data.mod.download;
-    var parts = downloadUrl.split('/');
-    var author = parts[3]; 
-    var modName = parts[4]; 
-
-    var githubApiUrl = 'https://api.github.com/repos/' + author + '/' + modName + '/releases';
-    return getDownloadCount(githubApiUrl, 'generic-container')
-    .catch(gitGayError => {
-        console.error('github link failed!', gitGayError);
-        var gitGayUrl = 'https://git.gay/api/v1/repos/' + author + '/' + modName + '/releases';
-        getDownloadCount(gitGayUrl, 'generic-container');
-       
-    });
-})
-.catch(error => {
-    console.error('Error al obtener datos del mod desde GitHub:', error);
-});
-
-
-//Refresh?/ no
+if (modName === 'geode.loader') {
+    var githubApiUrl = 'https://api.github.com/repos/' + 'geode-sdk' + '/' + 'geode' + '/releases';
+    getDownloadCount(githubApiUrl, 'generic-container');
+} else {
+    fetch(githubUrl)
+        .then(response => response.json())
+        .then(data => {
+            var downloadUrl = data.mod.download;
+            var parts = downloadUrl.split('/');
+            var author = parts[3];
+            var modName = parts[4];
+            var githubApiUrl = 'https://api.github.com/repos/' + author + '/' + modName + '/releases';
+            return getDownloadCount(githubApiUrl, 'generic-container')
+                .catch(gitGayError => {
+                    console.error('github link failed!', gitGayError);
+                    var gitGayUrl = 'https://git.gay/api/v1/repos/' + author + '/' + modName + '/releases';
+                    getDownloadCount(gitGayUrl, 'generic-container');
+                });
+        })
+        .catch(error => {
+            console.error('Error al obtener datos del mod desde GitHub:', error);
+        });
+}
