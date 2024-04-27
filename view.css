@@ -187,8 +187,26 @@ h2 {
         word-wrap: break-word;
     }
 }
-
-
-
   
+#home-button {
+    width: 170px;
+    height: 50px;
+    font-size: 20px;
+    transition: all 1s ease;
+    border-radius: 30px;
+    color: rgb(255, 255, 255);
+    background: unset;
+    border: 3px #fff solid;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    transition: all 0.2s ease
+  }
 
+  #home-button:hover {
+    height: 55px;
+    width: 180px;
+    color: #979797;
+    border: 3px #979797 solid;
+    transition: all 0.2s ease
+  }
