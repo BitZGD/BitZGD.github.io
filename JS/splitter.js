@@ -896,7 +896,7 @@ function updPkEst() {
     $('packInfoWrap').style.display = 'block';
 }
 
-var TOOL_URL = 'https://gdspritesheettool.com';
+var TOOL_URL = 'https://bitzgd.github.io/splitter.html';
 var CREDIT_LINE = 'Generated with GD Spritesheet Tool — ' + TOOL_URL;
 
 async function runPacker() {
@@ -1414,4 +1414,5 @@ $('modalBackdrop').addEventListener('click', function (e) {
 });
 document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') closeModal();
+
 });
