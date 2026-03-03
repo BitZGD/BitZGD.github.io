@@ -1000,9 +1000,13 @@ async function runPacker() {
     }
     var tf = outN + '.png',
         rtf = tf;
+    if (gp) {
+        tf = gp + outN + '.png';
+        rtf = gp + outN + '.png';
+    }
     if (pkIsIcon) {
-        tf = 'icons/' + outN + '.png';
-        rtf = tf;
+        tf = (gp ? gp : '') + 'icons/' + outN + '.png';
+        rtf = (gp ? gp : '') + 'icons/' + outN + '.png';
     }
     pkPL = '<?xml version="1.0" encoding="UTF-8"?>\n<!-- ' + CREDIT_LINE + ' -->\n<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">\n<plist version="1.0">\n    <dict>\n        <key>frames</key>\n        <dict>' + fx + '\n        </dict>\n        <key>metadata</key>\n        <dict>\n            <key>format</key>\n            <integer>3</integer>\n            <key>pixelFormat</key>\n            <string>RGBA8888</string>\n            <key>premultiplyAlpha</key>\n            <false/>\n            <key>realTextureFileName</key>\n            <string>' + rtf + '</string>\n            <key>size</key>\n            <string>{' + cw + ',' + ch + '}</string>\n            <key>textureFileName</key>\n            <string>' + tf + '</string>\n            <key>generator</key>\n            <string>GD Spritesheet Tool - ' + TOOL_URL + '</string>\n        </dict>\n    </dict>\n</plist>';
     log('packLog', 'Done: ' + pls.length + ' packed ' + cw + '×' + ch, 'success');
