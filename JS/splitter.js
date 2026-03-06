@@ -2,6 +2,26 @@ var $ = function (id) {
     return document.getElementById(id);
 };
 
+var smoothEnabled = false;
+
+function loadSmoothPreference() {
+    const saved = localStorage.getItem('gd-smooth');
+    smoothEnabled = saved === 'true';
+    const smoothCheck = $('packSmooth');
+    if (smoothCheck) {
+        smoothCheck.checked = smoothEnabled;
+    }
+    return smoothEnabled;
+}
+
+function saveSmoothPreference() {
+    const smoothCheck = $('packSmooth');
+    if (smoothCheck) {
+        smoothEnabled = smoothCheck.checked;
+        localStorage.setItem('gd-smooth', smoothEnabled);
+    }
+}
+
 function toast(m, t) {
     t = t || 'info';
     var c = $('toastContainer'),
@@ -57,6 +77,120 @@ function toggleTheme() {
     var t = localStorage.getItem('gd-theme');
     if (t === 'light') document.documentElement.setAttribute('data-theme', 'light');
 })();
+
+function scaleCVLanczos(c, f, useSmooth = true) {
+    if (f === 1) return c;
+
+    const nw = Math.max(1, Math.round(c.width * f));
+    const nh = Math.max(1, Math.round(c.height * f));
+
+    if (!useSmooth) {
+
+        const s = document.createElement('canvas');
+        s.width = nw;
+        s.height = nh;
+        const ctx = s.getContext('2d');
+        ctx.imageSmoothingEnabled = false;
+        ctx.drawImage(c, 0, 0, nw, nh);
+        return s;
+    }
+
+
+
+
+
+    const s = document.createElement('canvas');
+    s.width = nw;
+    s.height = nh;
+    const ctx = s.getContext('2d');
+
+
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+
+
+    if (f < 0.5) {
+
+        let tempCanvas = c;
+        let currentScale = 1;
+        const steps = [];
+
+
+        let remaining = f;
+        while (remaining < 0.7) {
+            steps.push(0.7);
+            remaining = remaining / 0.7;
+        }
+        steps.push(remaining);
+
+
+        for (let i = 0; i < steps.length; i++) {
+            const stepScale = steps[i];
+            const stepW = Math.max(1, Math.round(tempCanvas.width * stepScale));
+            const stepH = Math.max(1, Math.round(tempCanvas.height * stepScale));
+
+            const stepCanvas = document.createElement('canvas');
+            stepCanvas.width = stepW;
+            stepCanvas.height = stepH;
+            const stepCtx = stepCanvas.getContext('2d');
+            stepCtx.imageSmoothingEnabled = true;
+            stepCtx.imageSmoothingQuality = 'high';
+            stepCtx.drawImage(tempCanvas, 0, 0, stepW, stepH);
+
+            tempCanvas = stepCanvas;
+        }
+
+        return tempCanvas;
+    } else {
+
+        ctx.drawImage(c, 0, 0, nw, nh);
+        return s;
+    }
+}
+
+async function scaleCVHighQuality(c, f, useSmooth) {
+    if (f === 1) return c;
+
+    const nw = Math.max(1, Math.round(c.width * f));
+    const nh = Math.max(1, Math.round(c.height * f));
+
+
+    if (!useSmooth) {
+        const canvas = document.createElement('canvas');
+        canvas.width = nw;
+        canvas.height = nh;
+        const ctx = canvas.getContext('2d');
+        ctx.imageSmoothingEnabled = false;
+        ctx.drawImage(c, 0, 0, nw, nh);
+        return canvas;
+    }
+
+
+    try {
+        const bitmap = await createImageBitmap(c, {
+            resizeWidth: nw,
+            resizeHeight: nh,
+            resizeQuality: 'high'
+        });
+
+        const canvas = document.createElement('canvas');
+        canvas.width = nw;
+        canvas.height = nh;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(bitmap, 0, 0);
+        return canvas;
+    } catch (e) {
+
+        const canvas = document.createElement('canvas');
+        canvas.width = nw;
+        canvas.height = nh;
+        const ctx = canvas.getContext('2d');
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
+        ctx.drawImage(c, 0, 0, nw, nh);
+        return canvas;
+    }
+}
 
 // Upload setup
 function setupUpload(box, inp, cb) {
@@ -256,17 +390,7 @@ function trimCanvas(c) {
 }
 
 function scaleCV(c, f) {
-    if (f === 1) return c;
-    var nw = Math.max(1, Math.round(c.width * f)),
-        nh = Math.max(1, Math.round(c.height * f)),
-        s = document.createElement('canvas');
-    s.width = nw;
-    s.height = nh;
-    var ctx = s.getContext('2d');
-    ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = 'high';
-    ctx.drawImage(c, 0, 0, nw, nh);
-    return s;
+    return scaleCVWithSmoothing(c, f);
 }
 
 function detectPrefix(fr) {
@@ -327,6 +451,21 @@ function toggleGeode() {
     updateGeode();
 }
 
+document.addEventListener('DOMContentLoaded', function () {
+    loadSmoothPreference();
+
+    const smoothCheck = $('packSmooth');
+    if (smoothCheck) {
+        smoothCheck.addEventListener('change', function () {
+            saveSmoothPreference();
+            if (pkFiles.length > 0) {
+                updPkEst();
+            }
+        });
+    }
+});
+
+
 function updateGeode() {
     var id = $('geodeModId').value.trim(),
         el = $('geodePreview');
@@ -348,22 +487,111 @@ function updateGeode() {
 // Scale
 var scEn = false,
     scVal = 1,
-    scBase = 'GJ_CustomSheet';
+    scBase = 'GJ_CustomSheet',
+    smoothEnabled = false;
+
+
+function setupSmoothListener() {
+    const smoothCheck = $('packSmooth');
+    if (smoothCheck) {
+        smoothCheck.addEventListener('change', function () {
+            if (scEn) {
+                saveSmoothPreference();
+                toast(`Suavizado ${this.checked ? 'activado' : 'desactivado'}`, 'info');
+
+
+                if (pkFiles.length > 0) {
+                    updPkEst();
+                }
+            }
+        });
+    }
+}
 
 function toggleScale() {
     scEn = $('scaleEnabled').checked;
+
+
     $('scalePanel').querySelectorAll('.scale-option').forEach(function (b) {
         b.disabled = !scEn;
     });
+
+
+    const smoothCheck = $('packSmooth');
+    const smoothContainer = document.getElementById('smoothOptionContainer');
+    const smoothHint = document.getElementById('smoothHint');
+
+    if (smoothCheck && smoothContainer) {
+        if (scEn) {
+
+            smoothCheck.disabled = false;
+            smoothContainer.style.opacity = '1';
+            smoothCheck.checked = smoothEnabled;
+            if (smoothHint) smoothHint.innerHTML = 'Smoothing available';
+        } else {
+
+            smoothCheck.disabled = true;
+            smoothContainer.style.opacity = '0.5';
+            smoothCheck.checked = false;
+            if (smoothHint) smoothHint.innerHTML = 'Enable Resolution Scaling to use this option';
+        }
+    }
+
     $('scalePanel').classList.toggle('disabled', !scEn);
+
     if (!scEn) {
         scVal = 1;
         $('scalePanel').querySelectorAll('.scale-option').forEach(function (b, i) {
             b.classList.toggle('active', i === 0);
         });
     }
+
     updScName();
     updPkEst();
+}
+
+async function scaleCVWithSmoothing(c, f) {
+    if (f === 1) return c;
+
+    const nw = Math.max(1, Math.round(c.width * f));
+    const nh = Math.max(1, Math.round(c.height * f));
+
+    const useSmooth = scEn && smoothEnabled;
+
+    if (!useSmooth) {
+        const canvas = document.createElement('canvas');
+        canvas.width = nw;
+        canvas.height = nh;
+        const ctx = canvas.getContext('2d');
+        ctx.imageSmoothingEnabled = false;
+        ctx.drawImage(c, 0, 0, nw, nh);
+        return canvas;
+    }
+
+    try {
+        const bitmap = await createImageBitmap(c, {
+            resizeWidth: nw,
+            resizeHeight: nh,
+            resizeQuality: 'high'
+        });
+
+        const canvas = document.createElement('canvas');
+        canvas.width = nw;
+        canvas.height = nh;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(bitmap, 0, 0);
+        return canvas;
+    } catch (e) {
+
+        const canvas = document.createElement('canvas');
+        canvas.width = nw;
+        canvas.height = nh;
+        const ctx = canvas.getContext('2d');
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
+        ctx.drawImage(c, 0, 0, nw, nh);
+        return canvas;
+    }
 }
 
 function setScale(btn, v) {
@@ -899,6 +1127,81 @@ function updPkEst() {
 var TOOL_URL = 'https://bitzgd.github.io/splitter.html';
 var CREDIT_LINE = 'Generated with GD Spritesheet Tool — ' + TOOL_URL;
 
+function lanczosKernel(x, a = 3) {
+    if (x === 0) return 1;
+    if (Math.abs(x) >= a) return 0;
+    const px = Math.PI * x;
+    return (a * Math.sin(px) * Math.sin(px / a)) / (px * px);
+}
+
+function scaleCVLanczos3(c, f) {
+    if (f === 1) return c;
+
+    const srcW = c.width;
+    const srcH = c.height;
+    const dstW = Math.max(1, Math.round(srcW * f));
+    const dstH = Math.max(1, Math.round(srcH * f));
+
+    const dst = document.createElement('canvas');
+    dst.width = dstW;
+    dst.height = dstH;
+    const dstCtx = dst.getContext('2d');
+
+    const srcCtx = c.getContext('2d');
+    const srcData = srcCtx.getImageData(0, 0, srcW, srcH);
+    const dstData = dstCtx.createImageData(dstW, dstH);
+
+    const scale = 1 / f;
+    const a = 3; // Lanczos-3
+
+    for (let y = 0; y < dstH; y++) {
+        for (let x = 0; x < dstW; x++) {
+            const centerX = (x + 0.5) * scale;
+            const centerY = (y + 0.5) * scale;
+
+            const x1 = Math.floor(centerX - a);
+            const x2 = Math.ceil(centerX + a);
+            const y1 = Math.floor(centerY - a);
+            const y2 = Math.ceil(centerY + a);
+
+            let r = 0, g = 0, b = 0, aSum = 0;
+            let totalWeight = 0;
+
+            for (let sy = y1; sy < y2; sy++) {
+                for (let sx = x1; sx < x2; sx++) {
+                    if (sx < 0 || sx >= srcW || sy < 0 || sy >= srcH) continue;
+
+                    const dx = sx - centerX + 0.5;
+                    const dy = sy - centerY + 0.5;
+                    const weight = lanczosKernel(dx, a) * lanczosKernel(dy, a);
+
+                    if (weight === 0) continue;
+
+                    const srcIdx = (sy * srcW + sx) * 4;
+                    const alpha = srcData.data[srcIdx + 3] / 255;
+
+                    r += srcData.data[srcIdx] * weight * alpha;
+                    g += srcData.data[srcIdx + 1] * weight * alpha;
+                    b += srcData.data[srcIdx + 2] * weight * alpha;
+                    aSum += alpha * weight;
+                    totalWeight += weight;
+                }
+            }
+
+            if (totalWeight > 0) {
+                const dstIdx = (y * dstW + x) * 4;
+                dstData.data[dstIdx] = Math.min(255, Math.max(0, Math.round(r / totalWeight)));
+                dstData.data[dstIdx + 1] = Math.min(255, Math.max(0, Math.round(g / totalWeight)));
+                dstData.data[dstIdx + 2] = Math.min(255, Math.max(0, Math.round(b / totalWeight)));
+                dstData.data[dstIdx + 3] = Math.min(255, Math.max(0, Math.round((aSum / totalWeight) * 255)));
+            }
+        }
+    }
+
+    dstCtx.putImageData(dstData, 0, 0);
+    return dst;
+}
+
 async function runPacker() {
     if (!pkFiles.length) return;
     var pad = +$('packPadding').value || 0,
@@ -925,8 +1228,10 @@ async function runPacker() {
         src.width = f.w;
         src.height = f.h;
         src.getContext('2d').drawImage(f.img, 0, 0);
-        var scd = scaleCV(src, sc),
-            sw = scd.width,
+
+        var useSmooth = smoothEnabled && scEn;
+        var scd = await scaleCVWithSmoothing(src, sc);
+        sw = scd.width,
             sh = scd.height,
             pw = sw,
             ph = sh,
@@ -1084,6 +1389,7 @@ function clearPacker() {
     pkIsIcon = false;
     scEn = false;
     scVal = 1;
+
     $('packFileInput').value = '';
     $('packFileList').innerHTML = '';
     $('packUploadBox').classList.remove('has-files');
@@ -1098,13 +1404,20 @@ function clearPacker() {
     $('geodeEnabled').checked = false;
     $('geodeModId').value = '';
     $('scaleEnabled').checked = false;
+
+
+    smoothEnabled = loadSmoothPreference();
+
     toggleGeode();
     toggleScale();
+
     $('scalePanel').querySelectorAll('.scale-option').forEach(function (b, i) {
         b.classList.toggle('active', !i);
     });
+
     toast('Cleared', 'info');
 }
+
 setupUpload($('packUploadBox'), $('packFileInput'), handlePkFiles);
 $('packOutputName').addEventListener('input', function () {
     scBase = this.value.replace(/-(uhd|hd)$/i, '');
@@ -1420,3 +1733,14 @@ document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') closeModal();
 
 });
+
+(function () {
+    var t = localStorage.getItem('gd-theme');
+    if (t === 'light') document.documentElement.setAttribute('data-theme', 'light');
+
+    smoothEnabled = loadSmoothPreference();
+
+    setupSmoothListener();
+
+    toggleScale();
+})();
